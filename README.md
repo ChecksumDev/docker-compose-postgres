@@ -389,3 +389,50 @@ Using `docker-compose up` to launch a postgres and pgAdmin can simplify local de
 environment configuration. Configuring pgAdmin so that it does not ask for passwords, 
 and connection information requires some tricky shell scripting that was broken down
 and explained step by step in this repo.
+
+# Using the pg Script
+
+This repository includes a convenient shell script called `pg` that simplifies the management of PostgreSQL and pgAdmin containers. The script provides a simple command-line interface to start, stop, and manage the Docker Compose setup.
+
+## Commands
+
+- `./pg start`: Start PostgreSQL and pgAdmin containers in detached mode
+- `./pg status`: Display container status and connection information (including JDBC URL and psql command)
+- `./pg stop`: Stop the running containers
+- `./pg clean`: Stop containers and remove all associated volumes (data cleanup)
+- `./pg fix`: Detect and resolve port conflicts automatically
+
+## Examples
+
+Start the containers:
+```bash
+./pg start
+```
+
+Check the status and get connection information:
+```bash
+./pg status
+```
+
+Stop the containers:
+```bash
+./pg stop
+```
+
+If you encounter port conflicts (e.g., ports 15432 or 15433 are already in use), you can use:
+```bash
+./pg fix
+```
+
+The script will automatically detect containers using these ports and stop them.
+
+## Environment Variables
+
+You can customize the ports used by setting environment variables before running the script:
+- `PG_PORT`: PostgreSQL port (default: 15432)
+- `PGADMIN_PORT`: pgAdmin port (default: 15433)
+
+Example:
+```bash
+PG_PORT=15434 PGADMIN_PORT=15435 ./pg start
+```
