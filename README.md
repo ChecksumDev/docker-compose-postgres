@@ -434,5 +434,12 @@ You can customize the ports used by setting environment variables before running
 
 Example:
 ```bash
-PG_PORT=15434 PGADMIN_PORT=15435 ./pg start
+PG_PORT=25434 PGADMIN_PORT=25435 ./pg start
+```
+```bash
+PG_PORT=25434 PGADMIN_PORT=25435 ./pg status
+```
+
+```bash
+PG_PORT=25434 PGADMIN_PORT=25435 ./pg stop
 ```
