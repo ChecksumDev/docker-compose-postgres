@@ -13,9 +13,13 @@
 # - clean: Stop containers and remove all associated volumes
 # - fix: Detect and resolve port conflicts automatically
 #
-# The script handles port conflicts by detecting if ports 15432 (PostgreSQL) or
-# 15433 (pgAdmin) are already in use by other containers, and provides options
-# to resolve these conflicts.
+# The script handles port conflicts by detecting if the configured ports
+# (default: 15432 for PostgreSQL and 15433 for pgAdmin) are already in use
+# by other containers, and provides options to resolve these conflicts.
+# 
+# Port numbers can be customized using environment variables:
+# - PG_PORT: PostgreSQL port (default: 15432)
+# - PGADMIN_PORT: pgAdmin port (default: 15433)
 # 
 #==============================================================================
 
@@ -167,7 +171,8 @@ show_port_conflicts() {
   done
   # Show quick fix options
   log info "Quick fix: pg fix"
-  log info "Alternatively set different change port numbers in ${COMPOSE_FILE}"
+  log info "Alternatively use environment variables to set different ports:"
+  log info "  PG_PORT=<port> PGADMIN_PORT=<port> ./pg start"
 }
 
 #------------------------------------------------------------------------------
@@ -186,7 +191,12 @@ usage() {
   printf "  ${BLUE}status${NC}  Show status & connection info\n"
   printf "  ${YELLOW}stop${NC}    Stop containers\n"
   printf "  ${RED}clean${NC}   Stop containers & remove volumes\n"
-  printf "  ${YELLOW}fix${NC}     Detect & fix port conflicts\n"
+  printf "  ${YELLOW}fix${NC}     Detect & fix port conflicts\n\n"
+  printf "Environment Variables:\n"
+  printf "  ${BLUE}PG_PORT${NC}       PostgreSQL port (default: 15432)\n"
+  printf "  ${BLUE}PGADMIN_PORT${NC}  pgAdmin port (default: 15433)\n\n"
+  printf "Example:\n"
+  printf "  PG_PORT=25432 PGADMIN_PORT=25433 ./pg start\n"
 }
 
 #------------------------------------------------------------------------------
